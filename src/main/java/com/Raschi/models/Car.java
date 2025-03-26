@@ -2,6 +2,7 @@ package com.Raschi.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +21,10 @@ public class Car {
 
     private String brand;
 
+    private String description;
+
+    private LocalDate publicationDate;
+
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "site_id")
     private Site site;
@@ -30,6 +35,22 @@ public class Car {
 
     public void setCarId(UUID carId) {
         this.carId = carId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDate publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public double getValue() {
