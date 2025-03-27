@@ -1,4 +1,4 @@
-package com.Raschi.models;
+package com.Raschi.models.enums;
 
 public enum SellerType {
 

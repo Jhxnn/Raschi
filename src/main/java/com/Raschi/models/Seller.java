@@ -1,6 +1,7 @@
 package com.Raschi.models;
 
 
+import com.Raschi.models.enums.SellerType;
 import jakarta.persistence.*;
 
 import java.util.UUID;
