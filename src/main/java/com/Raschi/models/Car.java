@@ -23,7 +23,7 @@ public class Car {
 
     private String description;
 
-    private LocalDate publicationDate;
+    private String year;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "site_id")
@@ -45,12 +45,12 @@ public class Car {
         this.description = description;
     }
 
-    public LocalDate getPublicationDate() {
-        return publicationDate;
+    public String getYear() {
+        return year;
     }
 
-    public void setPublicationDate(LocalDate publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public double getValue() {
