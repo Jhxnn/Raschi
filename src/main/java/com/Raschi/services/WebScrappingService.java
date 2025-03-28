@@ -49,10 +49,12 @@ public class WebScrappingService {
 
                 priceText = priceText.replace("R$", "").replace(".", "").replace(",", ".");
                 double price = Double.parseDouble(priceText);
-                SiteDto siteDto = new SiteDto("Webmotors", imageUrl);
-                siteService.createSite(siteDto);
 
-                CarDto carDto = new CarDto(price, searchCarDto.model(), searchCarDto.brand(),carName, carYear);
+
+                SiteDto siteDto = new SiteDto("Webmotors", imageUrl);
+                Site site = siteService.createSite(siteDto);
+
+                CarDto carDto = new CarDto(price, searchCarDto.model(), searchCarDto.brand(),carName, carYear,site);
                 Car car = carService.createCar(carDto);
                 listCar.add(car);
 
