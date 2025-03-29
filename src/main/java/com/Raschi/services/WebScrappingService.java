@@ -35,31 +35,33 @@ public class WebScrappingService {
         String olxUrl = "https://www.olx.com.br/estado-sc?q="+ searchCarDto.brand()+ "%20"+ searchCarDto.model();
         List<Car> listCar = new ArrayList<>();
         try {
-            Document webMotors = Jsoup.connect(webMotorsUrl).get();
-            Elements nameElements = webMotors.select("h3._body-regular-small_qtpsh_152");
-            Elements priceElements = webMotors.select("p._web-subtitle-medium_qtpsh_69");
-            Elements imageElements = webMotors.select("img._Image_452ae_9");
-            Elements yearElements = webMotors.select("p._body-regular-small_qtpsh_152");
+            Document doc = Jsoup.connect(olxUrl)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36")
+                    .header("Accept-Language", "pt-BR,pt;q=0.9")
+                    .timeout(10000)
+                    .get();
 
-            for (int i = 0; i < Math.min(3, nameElements.size()); i++) {
-                String carName = nameElements.get(i).text();
-                String priceText = priceElements.get(i).text();
-                String imageUrl = imageElements.get(i).attr("src");
-                String carYear = yearElements.get(i).text();
+            Elements anuncios = doc.select("div.sc-12rk7z2-1"); // Seletor dos cards (pode mudar conforme o layout)
+
+            for (Element anuncio : anuncios) {
+                String titulo = anuncio.select("h2").text();
+                String priceText = anuncio.select("span.sc-ifAKCX.eoKYee").text();
 
                 priceText = priceText.replace("R$", "").replace(".", "").replace(",", ".");
                 double price = Double.parseDouble(priceText);
 
-
-                SiteDto siteDto = new SiteDto("Webmotors", imageUrl);
+                SiteDto siteDto = new SiteDto("Webmotors", olxUrl);
                 Site site = siteService.createSite(siteDto);
 
-                CarDto carDto = new CarDto(price, searchCarDto.model(), searchCarDto.brand(),carName, carYear,site);
+                CarDto carDto = new CarDto(price, searchCarDto.model(), searchCarDto.brand(),titulo, "teste",site);
                 Car car = carService.createCar(carDto);
                 listCar.add(car);
 
 
             }
+
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
