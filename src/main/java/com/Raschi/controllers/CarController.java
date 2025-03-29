@@ -1,8 +1,10 @@
 package com.Raschi.controllers;
 
 import com.Raschi.dtos.CarDto;
+import com.Raschi.dtos.SearchCarDto;
 import com.Raschi.models.Car;
 import com.Raschi.services.CarService;
+import com.Raschi.services.WebScrappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class CarController {
     @Autowired
     CarService carService;
 
+    @Autowired
+    WebScrappingService webScrappingService;
+
     @GetMapping
     public ResponseEntity<List<Car>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(carService.findAll());
@@ -31,6 +36,11 @@ public class CarController {
     @PostMapping
     public ResponseEntity<Car> createCar(@RequestBody CarDto carDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.createCar(carDto));
+    }
+
+    @PostMapping("/search")
+    public  ResponseEntity<List<Car>> searchCar(@RequestBody SearchCarDto searchCarDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(webScrappingService.findByBrandAndModel(searchCarDto));
     }
 
     @PutMapping("/{id}")

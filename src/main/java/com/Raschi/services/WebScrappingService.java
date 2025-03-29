@@ -29,7 +29,7 @@ public class WebScrappingService {
     @Autowired
     SiteService siteService;
 
-    private List<Car> findByBrandAndModel(SearchCarDto searchCarDto){
+    public List<Car> findByBrandAndModel(SearchCarDto searchCarDto){
         String webMotorsUrl = "https://www.webmotors.com.br/carros/estoque/" + searchCarDto.brand() + "/" + searchCarDto.model();
         String marketPlaceUrl = "https://www.facebook.com/marketplace/"+ searchCarDto.location()+"/search/?query="+searchCarDto.brand() + "%20"+ searchCarDto.model()+ "&exact=false&locale=pt_BR";
         String olxUrl = "https://www.olx.com.br/estado-sc?q="+ searchCarDto.brand()+ "%20"+ searchCarDto.model();
